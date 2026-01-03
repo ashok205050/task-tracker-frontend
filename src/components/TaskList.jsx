@@ -2,35 +2,29 @@ import { useState } from 'react';
 import TaskItem from './TaskItem';
 
 const TaskList = ({ tasks, onToggleStatus, onDelete }) => {
-  // State for Filters and Sorting
   const [statusFilter, setStatusFilter] = useState('All');
   const [priorityFilter, setPriorityFilter] = useState('All');
-  const [sortOrder, setSortOrder] = useState('Ascending'); // 'Ascending' or 'Descending'
+  const [sortOrder, setSortOrder] = useState('Ascending'); 
 
-  // Combined Logic: Filter -> Then Sort
   const filteredTasks = tasks
     .filter(task => statusFilter === 'All' ? true : task.status === statusFilter)
     .filter(task => priorityFilter === 'All' ? true : task.priority === priorityFilter)
     .sort((a, b) => {
       const dateA = new Date(a.dueDate);
       const dateB = new Date(b.dueDate);
-      // Toggle sort logic based on state
       return sortOrder === 'Ascending' ? dateA - dateB : dateB - dateA;
     });
 
   return (
     <div>
-      {/* --- Header Section --- */}
       <div className="flex flex-col xl:flex-row justify-between items-start xl:items-center mb-8 gap-6">
         <div>
           <h2 className="text-3xl font-bold text-gray-800">My Tasks</h2>
           <p className="text-gray-500 text-sm mt-1">Manage and track your daily activities</p>
         </div>
 
-        {/* --- Controls Wrapper (Filters + Sort) --- */}
         <div className="flex flex-col sm:flex-row gap-4 w-full xl:w-auto">
           
-          {/* 1. Sort Dropdown */}
           <div className="relative w-full sm:w-48">
             <select 
               value={sortOrder} 
@@ -45,7 +39,6 @@ const TaskList = ({ tasks, onToggleStatus, onDelete }) => {
             </div>
           </div>
 
-          {/* 2. Priority Filter */}
           <div className="relative w-full sm:w-48">
             <select 
               value={priorityFilter} 
